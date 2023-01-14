@@ -98,24 +98,29 @@ class Application(tk.Frame):
         # get the directory path to save the audio file from the text box
         directory_path = self.directory_path_text_box.get()
 
-        # create a directory to save the audio file
-        # the directory name is the current time
-        directory_name = time.strftime("%Y%m%d-%H%M%S")
-        audio_directory = os.path.join(directory_path, directory_name)
-        os.mkdir(audio_directory)
+        # create a directory to save the audio file if the directory does not exist
+        if not os.path.exists(directory_path):
+            os.makedirs(directory_path)
 
-        # extract the audio from the youtube video and save it as mp3 file
-        # the audio file name is the current time
-        audio_file_name = time.strftime("%Y%m%d-%H%M%S")
-        audio_file_path = os.path.join(audio_directory, audio_file_name + ".mp3")
+        # extract the audio from the youtube video
         youtube = pytube.YouTube(youtube_video_url)
-        video = youtube.streams.first()
-        video.download(output_path=audio_directory, filename=audio_file_name + ".mp3")
-        pydub.AudioSegment.from_file(audio_file_path).export(audio_file_path, format="mp3")
+        video = youtube.streams.filter(only_audio=True).first()
+        audio_file_name = video.default_filename
+        video.download(output_path=directory_path)
 
-        # display the message that the audio file has been saved successfully
-        self.title_label["text"] = "The audio file has been saved successfully!"
+        # convert the audio file to mp3
+        mp3_file_path = os.path.join(directory_path, audio_file_name.split(".")[0] + ".mp3")
+        try:
+            print("Start converting audio file to mp3")
+            audio_file = pydub.AudioSegment.from_file(audio_file_path)
+            audio_file.export(mp3_file_path, format="mp3")
+            print("Conversion to mp3 completed")
+            self.title_label.config(text="The audio file has been saved successfully!")
+        except Exception as e:
+            print("Error converting audio file to mp3:", e)
+            self.title_label.config(text="Error, the audio file has not been saved!")
 
+    # function to browse the directory path to save the audio file
     def browse(self):
         directory_path = filedialog.askdirectory(parent=self.master, initialdir="/", title='Please select a directory')
 

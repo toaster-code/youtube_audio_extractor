@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "youtube_audio_extractor"
+version = "0.1.0"
+description = ""
+authors = ["Fabio <fabio.manzoni@gmail.com>"]
+readme = "README.md"
+packages = [{include = "poetry add youtube_dl"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+youtube_dl = "^2021.12.17"
+ffmpeg-downloader = "^0.2.0"
+pytube = "^12.1.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

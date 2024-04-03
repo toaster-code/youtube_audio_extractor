@@ -30,6 +30,7 @@ git clone https://github.com/<username>/youtube-audio-extractor.git
 ```cmd
 pip install -r requirements.txt
 ```
+(Alternatively, I use poetry to get dependencies from poetry.lock and creating a virtual environment)
 
 3. Run the application
 ```cmd

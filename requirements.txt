@@ -1,11 +1,4 @@
-appdirs==1.4.4
-certifi==2022.12.7
-charset-normalizer==3.0.1
-colorama==0.4.6
-ffmpeg-downloader==0.2.0
-idna==3.4
-packaging==23.0
-pytube==12.1.2
-requests==2.28.2
-tqdm==4.64.1
-urllib3==1.26.14
+python==^3.9
+youtube_dl==^2021.12.17
+ffmpeg-downloader==^0.2.0
+pytube==^12.1.2
